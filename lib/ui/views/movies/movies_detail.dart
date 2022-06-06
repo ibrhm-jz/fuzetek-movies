@@ -21,36 +21,75 @@ class _MovieDetailState extends State<MovieDetail> {
         overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                imageHeader(widget.movie!.backdrop),
-                Container(
-                  margin: const EdgeInsets.only(top: 10, left: 0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: const Icon(
-                            Icons.chevron_left,
-                            size: 50,
-                            color: Colors.white,
+      body: widget.movie!.title == null || widget.movie!.backdrop == null
+          ? Container(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    normalText('No hay informacion'),
+                    const SizedBox(height: 20),
+                    TextButton(
+                      child: Container(
+                        width: 200,
+                        child: const Center(
+                          child: Text(
+                            'Regresar',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                           ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.amber,
+                        onSurface: Colors.yellow,
+                        side: const BorderSide(color: Colors.black, width: 2),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                      ),
+                      onPressed: () async {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      imageHeader(widget.movie!.backdrop),
+                      Container(
+                        margin: const EdgeInsets.only(top: 10, left: 0),
+                        child: Row(
+                          children: [
+                            IconButton(
+                                icon: const Icon(
+                                  Icons.chevron_left,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
+                  infoMovie(),
+                ],
+              ),
             ),
-            infoMovie(),
-          ],
-        ),
-      ),
     );
   }
 

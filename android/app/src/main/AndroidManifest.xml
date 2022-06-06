@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fusetek_movies">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="fusetek_movies"
         android:icon="@mipmap/ic_launcher">
