@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fusetek_movies/services/auth.dart';
 import 'package:fusetek_movies/ui/widgets/defaultToast.dart';
 import 'package:fusetek_movies/ui/widgets/default_field.dart';
+import 'package:fusetek_movies/ui/widgets/progress_dialog.dart';
 import 'package:fusetek_movies/ui/widgets/text_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -13,22 +14,25 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  TextEditingController? userController = TextEditingController();
-  TextEditingController? passwordController = TextEditingController();
+  final TextEditingController userController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     final auth = Provider.of<Auth>(context);
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
-        margin: const EdgeInsets.all(20),
-        child: SafeArea(
-          child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.all(20),
+          height: height,
+          child: SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                titleText('Crear cuenta nueva'),
+                titleText('Crea una nueva cuenta.'),
                 const SizedBox(height: 20),
                 Image.asset(
                   'assets/undraw_online_video.png',
@@ -70,13 +74,18 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   onPressed: () async {
-                    if (userController!.text != '' &&
-                        passwordController!.text != '') {
+                    ProgressDialog progressDialog =
+                        ProgressDialog(context, message: "Iniciando sesión...");
+                    progressDialog.show();
+                    if (userController.text != '' &&
+                        passwordController.text != '') {
                       await auth.createUser(
-                          userController!.text, passwordController!.text);
+                          userController.text, passwordController.text);
+                      progressDialog.dismiss();
                       Navigator.pop(context);
                     } else {
                       showToast('Rellene todos los campos');
+                      progressDialog.dismiss();
                     }
                   },
                 ),

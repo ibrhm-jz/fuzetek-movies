@@ -7,7 +7,7 @@ class DefaultField extends StatefulWidget {
     this.hintText,
     this.obscureText = false,
   });
-  final TextEditingController? controller;
+  final TextEditingController controller;
   String? hintText;
   bool? obscureText;
 
@@ -18,7 +18,7 @@ class DefaultField extends StatefulWidget {
 class _DefaultFieldState extends State<DefaultField> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       textAlign: TextAlign.center,
       controller: widget.controller,
       keyboardType: TextInputType.text,
